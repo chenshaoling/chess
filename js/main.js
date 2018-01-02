@@ -29,6 +29,7 @@ export default class Main {
     this.player   = new Player(ctx)
     this.gameinfo = new GameInfo()
     // this.music    = new Music()
+    this.render()
 
     window.requestAnimationFrame(
       this.loop.bind(this),
@@ -36,17 +37,7 @@ export default class Main {
     )
   }
 
-  /**
-   * 随着帧数变化的敌机生成逻辑
-   * 帧数取模定义成生成的频率
-   */
-  enemyGenerate() {
-    if ( databus.frame % 30 === 0 ) {
-      let enemy = databus.pool.getItemByClass('enemy', Enemy)
-      enemy.init(6)
-      databus.enemys.push(enemy)
-    }
-  }
+ 
 
   // 全局碰撞检测
   collisionDetection() {
@@ -68,15 +59,7 @@ export default class Main {
     //   }
     // })
 
-    for ( let i = 0, il = databus.enemys.length; i < il;i++ ) {
-      let enemy = databus.enemys[i]
-
-      // if (!this.player.isCollideWith(enemy) ) {
-      //   databus.gameOver = true
-
-      //   break
-      // }
-    }
+   
   }
 
   //游戏结束后的触摸事件处理逻辑
@@ -103,21 +86,8 @@ export default class Main {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     this.bg.render(ctx)
-
-    databus.bullets
-           .concat(databus.enemys)
-           .forEach((item) => {
-              item.drawToCanvas(ctx)
-            })
-
-
-    databus.animations.forEach((ani) => {
-      console.log(ctx)
-      if ( ani.isPlaying ) {
-
-        ani.aniRender(ctx)
-      }
-    })
+    this.player.initEvent(ctx)
+   
 
     this.gameinfo.renderGameScore(ctx, databus.score)
   }
@@ -126,12 +96,7 @@ export default class Main {
   update() {
     // this.bg.update()
 
-    databus.bullets
-           .concat(databus.enemys)
-           .forEach((item) => {
-              item.update()
-            })
-
+    
     // this.enemyGenerate()
 
     // this.collisionDetection();
@@ -142,7 +107,7 @@ export default class Main {
     databus.frame++
 
     this.update()
-    this.render()
+    // this.render()
 
     
 

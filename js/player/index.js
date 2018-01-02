@@ -9,8 +9,8 @@ const BG_HEIGHT = 280
 const left = (screenWidth - BG_WIDTH) / 2;
 const top=120;
 // 玩家相关常量设置
-const PLAYER_WIDTH   = 28
-const PLAYER_HEIGHT  = 28
+const PLAYER_WIDTH   =18
+const PLAYER_HEIGHT  = 18
 
 let databus = new DataBus()
 let chessBoard=[];
@@ -25,6 +25,7 @@ for (var i = 0; i < 15; i++) {
 
 export default class Player  {
   constructor(ctx) {
+    
 
     this.over=false;
     this.me=true;
@@ -42,7 +43,6 @@ export default class Player  {
   // 画棋子
   drawChees(ctx, i, j, me) {
     
-
     
     let x = left + i * 20;
     let y = top + j * 20
@@ -73,6 +73,7 @@ export default class Player  {
    * 玩家响应手指的触摸事件
    */
   initEvent(ctx) {
+   
     canvas.addEventListener('touchstart', ((e) => {
       e.preventDefault()
 
@@ -85,8 +86,8 @@ export default class Player  {
       if (!this.me) {
         return;
       }
-      var i = Math.floor(x / 30);
-      var j = Math.floor(y / 30);
+      var i = Math.floor((x - left+10) / 20);
+      var j = Math.floor((y - top + 10) / 20);
       if (chessBoard[i][j] == 0) {
         this.drawChees(ctx, i, j, this.me);
 
@@ -97,8 +98,8 @@ export default class Player  {
             this.myWin[k]++;
             this.computerWin[k] = 6;
             if (this.myWin[k] == 5) {
-              alert('你赢啦');
-              this.over = true;
+              databus.myWin=true
+              databus.gameOver = true;
             }
           }
         }
@@ -248,8 +249,8 @@ export default class Player  {
         this.computerWin[k]++;
         this.myWin[k] = 6;
         if (this.computerWin[k] == 5) {
-          alert("计算机赢了");
-          this.over = true;
+          databus.computerWin = true
+          databus.gameOver = true;
         }
       }
     }

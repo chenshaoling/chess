@@ -6,7 +6,6 @@ const BG_WIDTH     = 280
 const BG_HEIGHT    = 280
 
 const left = (screenWidth-BG_WIDTH)/2;
-console.log(screenWidth)
 
 /**
  * 游戏背景类
@@ -14,8 +13,7 @@ console.log(screenWidth)
 export default class BackGround  {
   constructor(ctx) {
 
-    this.render(ctx)
-
+    // this.render(ctx)
   }
 
   /**
@@ -23,8 +21,8 @@ export default class BackGround  {
    */
   render(ctx) {
     ctx.fillStyle="#fff";
-    ctx.fillRect(0,0 ,screenWidth,screenHeight);
-    ctx.fill();
+    ctx.fillRect(0, 0, screenWidth,screenHeight);
+    ctx.fill;
     ctx.strokeStyle = "#867a7a";
 
     for (var i = 0; i < 15; i++) {
